@@ -611,10 +611,7 @@ const getRNKeyAndStyleValue = ({
 }: any) => {
   let style: any = {};
   if (config === true) {
-    style = {
-      ...style,
-      [key]: convertStringNumberToNumber(key, value),
-    };
+    style[key] = convertStringNumberToNumber(key, value);
   } else if (config) {
     //@ts-ignore
     const { property, scale, properties, transformer } = config;
@@ -648,21 +645,12 @@ const getRNKeyAndStyleValue = ({
     if (properties) {
       //@ts-ignore
       properties.forEach((property) => {
-        style = {
-          ...style,
-          [property]: val,
-        };
+        style[property] = val;
       });
     } else if (property) {
-      style = {
-        ...style,
-        [property]: val,
-      };
+      style[property] = val;
     } else {
-      style = {
-        ...style,
-        ...val,
-      };
+      style = Object.assign(style, val);
     }
   }
 
@@ -742,10 +730,7 @@ export const getStyleAndFilteredProps = ({
         currentBreakpoint,
       });
 
-      styleFromProps = {
-        ...styleFromProps,
-        ...newStyle,
-      };
+      styleFromProps = Object.assign(styleFromProps, newStyle);
     }
   }
 
@@ -767,8 +752,8 @@ export const getStyleAndFilteredProps = ({
     });
 
     const { dataSet: newDataSet, styles } = getResponsiveStyles(query);
-    dataSet = { ...dataSet, ...newDataSet };
-    styleFromProps = { ...styleFromProps, ...StyleSheet.flatten(styles) };
+    dataSet = Object.assign(dataSet, newDataSet);
+    styleFromProps = Object.assign(styleFromProps, StyleSheet.flatten(styles));
   }
 
   if (process.env.NODE_ENV === 'development' && debug) {

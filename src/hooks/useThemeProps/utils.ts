@@ -53,7 +53,7 @@ export function extractProps(
       } else if (property === 'shadow') {
         let shadowProps = theme[themePropertyMap[property]][props[property]];
         if (!isNil(shadowProps)) {
-          newProps = { ...newProps, ...shadowProps };
+          newProps = Object.assign(newProps, shadowProps);
         }
       } else {
         newProps[property] = resolveValueWithBreakpoint(
